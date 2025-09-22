@@ -14,6 +14,7 @@
 #include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpinBox>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,8 +22,9 @@ QT_BEGIN_NAMESPACE
 class Ui_Widget
 {
 public:
-    QSpinBox *spinBox;
+    QVBoxLayout *verticalLayout_2;
     QSlider *horizontalSlider;
+    QSpinBox *spinBox;
     QLCDNumber *lcdNumber;
 
     void setupUi(QWidget *Widget)
@@ -30,22 +32,30 @@ public:
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
         Widget->resize(800, 600);
-        spinBox = new QSpinBox(Widget);
-        spinBox->setObjectName("spinBox");
-        spinBox->setEnabled(true);
-        spinBox->setGeometry(QRect(100, 50, 80, 25));
-        spinBox->setMinimumSize(QSize(0, 0));
-        spinBox->setMinimum(-100);
-        spinBox->setMaximum(100);
+        verticalLayout_2 = new QVBoxLayout(Widget);
+        verticalLayout_2->setObjectName("verticalLayout_2");
         horizontalSlider = new QSlider(Widget);
         horizontalSlider->setObjectName("horizontalSlider");
-        horizontalSlider->setGeometry(QRect(420, 50, 160, 16));
         horizontalSlider->setMinimum(-100);
         horizontalSlider->setMaximum(100);
         horizontalSlider->setOrientation(Qt::Orientation::Horizontal);
+
+        verticalLayout_2->addWidget(horizontalSlider);
+
+        spinBox = new QSpinBox(Widget);
+        spinBox->setObjectName("spinBox");
+        spinBox->setEnabled(true);
+        spinBox->setMinimumSize(QSize(0, 0));
+        spinBox->setMinimum(-100);
+        spinBox->setMaximum(100);
+
+        verticalLayout_2->addWidget(spinBox);
+
         lcdNumber = new QLCDNumber(Widget);
         lcdNumber->setObjectName("lcdNumber");
-        lcdNumber->setGeometry(QRect(300, 190, 64, 23));
+
+        verticalLayout_2->addWidget(lcdNumber);
+
 
         retranslateUi(Widget);
         QObject::connect(spinBox, &QSpinBox::valueChanged, horizontalSlider, &QSlider::setValue);
